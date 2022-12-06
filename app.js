@@ -1,31 +1,25 @@
-// creao il la variabile 'rl' fhe userò per prendere gli imput dell'utente
+// creao la variabile 'readline' fhe userò per prendere gli imput dell'utente
 const readline = require("readline-sync")
-/*const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });*/
 
 
-  //funzione che prende in ingresso un nuero e due stringhe, ritorna il numero se non è divisibile per 3 e 5, 
-  //oppure ritorna la stringa(se divisibile sia per 3 che per 5 unisce le stringhe)
+  //funzione che prende in ingresso due numeri e una stringha, ritorna la stringa se il primo numero divisibile per il secondo,
 
-  function outputModulo(num, str3, str5){
-    let finalString = num.toString() + " "
-    if (num % 3 === 0 && num % 5 === 0){
-        finalString += str3 + " " + str5
-    } else if (num % 3 === 0){
-        finalString += str3
-    } else if (num % 5 === 0){
-        finalString += str5
+  function outputModulo(num1, num2, str){
+    if (num1 % num2 === 0){
+      // ho aggiunto lo spazio per la stampa in console
+      return " " + str
     }
-    return finalString
+
+    return ''
   }
 
-// funzione che prende un numero e due stringhe e richiama la funzione outputModulo n volte e stampa le stringhe in output
+// funzione che prende tre numeri e due stringhe e richiama la funzione outputModulo n volte e stampa le stringhe in output
+// il primo numero decide quante volte stampare il ciclo
+// il secondo numero decide ogni quante riche stampare la prima stringa e lo stesso comportamento ha la seconda stringa
 
-function printResults(fine, str3, str5){
+function printResults(fine, num1, str1, num2, str2){
   for (let i = 1; i <= fine; i++){
-    console.log(outputModulo(i, str3, str5))
+    console.log(parseInt(i) + outputModulo(i, num1, str1) + outputModulo(i, num2, str2))
   }
 }
 
@@ -42,14 +36,29 @@ function app(fine, tipo){
         str3 = "mar"
         str5 = "print"
     }
-    printResults(fine, str3, str5)
+    printResults(fine, 3, str3, 5, str5)
 }
 
 
-    let fine = readline.question("Inserisci il valore della variabile \"fine\": ")
-    let tipo = readline.question("Inserisci il valore della variabile \"tipo\": ")
-
 //funzione che chiede all'utente i valori delle variabili e controlla il parametro "fine" che sia un numero e che sia maggiore di zero
 // il parametro "tipo" non presenta particolari problemi, il programma funziona anche se il campo è lasciato vuoto
-
-app(fine, tipo)
+function program(){
+  let looping = true
+  let fine
+  while (looping){
+    fine = readline.question("Inserisci il valore della variabile \"fine\": ")
+    if (isNaN(parseInt(fine))){
+      console.log("Non è stato inserito un numero valido")
+    } else if (parseInt(fine) < 1){
+      console.log("Il numero inserito deve essere positivo")
+    } else {
+      looping = false
+    }
+  }
+  
+  let tipo = readline.question("Inserisci il valore della variabile \"tipo\": ")
+  app(fine, tipo)
+}
+    
+//avvio app
+program()
